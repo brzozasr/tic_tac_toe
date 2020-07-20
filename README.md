@@ -1,2 +1,2 @@
-# tic_tac-_toe
+# tic_tac_toe
 The Tic-Tac-Toe game in python
