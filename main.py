@@ -1,4 +1,5 @@
 import random
+import tools
 
 play_board = []
 player = ""
