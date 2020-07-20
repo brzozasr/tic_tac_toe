@@ -19,7 +19,7 @@ def get_move():
             break
         elif move in coordinates:
             if turn == "X":
-                turn = "0"
+                turn = "O"
             else:
                 turn = "X"
         else:
