@@ -1,4 +1,5 @@
 def is_full(board):
+    """Checking that board is full (True) or not (False)"""
     temp_str = ""
     for dot_list in board:
         for dot in dot_list:
@@ -10,6 +11,12 @@ def is_full(board):
 
 
 def has_won(board):
+    """Checking if three of their marks in a horizontal, vertical, or diagonal row and
+    return True, player winning marks (X or O), number of full mark line (from 0 to 7),
+    otherwise return False, None, -1.
+    Full mark lines: 0 - top horizontal, 1 - middle horizontal, 2 - bottom horizontal,
+    3 - left vertical, 4 - middle vertical, 5 - right vertical, 6 - left diagonal,
+    7 - right diagonal."""
     lines = [[board[0][0], board[0][1], board[0][2]], [board[1][0], board[1][1], board[1][2]],
              [board[2][0], board[2][1], board[2][2]], [board[0][0], board[1][0], board[2][0]],
              [board[0][1], board[1][1], board[2][1]], [board[0][2], board[1][2], board[2][2]],
@@ -25,6 +32,9 @@ def has_won(board):
 
 
 def print_board(board, line_filled):
+    """Print the formatting board and coloring three in a row:
+    - board: board of the game (global variable 'play_board');
+    - line_filled: number of three in a row (from function 'has_won()')."""
     tmp_list_out = []
     for i in range(3):
         tmp_list_in = []

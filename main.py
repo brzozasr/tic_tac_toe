@@ -6,17 +6,19 @@ player = ""
 
 
 def set_play_board(new_play_board):
+    """Setter for the variable 'play_board'."""
     global play_board
     play_board = new_play_board
 
 
 def set_player(new_player):
+    """Setter for the variable 'player' (keep the present player X or O)"""
     global player
     player = new_player
 
 
 def init_board():
-    """Function initialize the new board of the game"""
+    """Function initialize the new empty board of the game"""
     board = []
     for _ in range(3):
         board_in = []
@@ -26,7 +28,11 @@ def init_board():
     return board
 
 
-def mark(coordinates, board, player_sign):
+def mark(board, coordinates, player_sign):
+    """Mark X or O in the board:
+    - board: board of the game (global variable 'play_board');
+    - coordinates: input A1, C2 e.t.c.;
+    - player_sign: X or O (global variable 'player')."""
     if coordinates[0] == "A":
         x = 0
     elif coordinates[0] == "B":
