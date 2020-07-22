@@ -1,3 +1,28 @@
+import os
+import subprocess
+
+
+def clear_console():
+    """Function clears the console."""
+    if os.name in ('nt', 'dos'):
+        subprocess.call("cls")
+    elif os.name in ('linux', 'osx', 'posix'):
+        subprocess.call("clear")
+    else:
+        print("\n" * 120)
+
+
+def is_mode_correct(mode_no):
+    """The function checks the correctness of the game mode (number range from 1 to 3)."""
+    try:
+        num = int(mode_no)
+        if num < 1 or num > 3:
+            return False
+    except ValueError:
+        return False
+    return True
+
+
 def is_full(board):
     """Checking that board is full (True) or not (False)"""
     temp_str = ""
@@ -41,42 +66,42 @@ def print_board(board, line_filled):
         for j in range(3):
             if line_filled == 0:
                 if i == 0:
-                    tmp_list_in.append('\033[31m' + board[i][j] + '\033[0m')
+                    tmp_list_in.append('\033[01;31m' + board[i][j] + '\033[0m')
                 else:
                     tmp_list_in.append('\033[34m' + board[i][j] + '\033[0m')
             elif line_filled == 1:
                 if i == 1:
-                    tmp_list_in.append('\033[31m' + board[i][j] + '\033[0m')
+                    tmp_list_in.append('\033[01;31m' + board[i][j] + '\033[0m')
                 else:
                     tmp_list_in.append('\033[34m' + board[i][j] + '\033[0m')
             elif line_filled == 2:
                 if i == 2:
-                    tmp_list_in.append('\033[31m' + board[i][j] + '\033[0m')
+                    tmp_list_in.append('\033[01;31m' + board[i][j] + '\033[0m')
                 else:
                     tmp_list_in.append('\033[34m' + board[i][j] + '\033[0m')
             elif line_filled == 3:
                 if j == 0:
-                    tmp_list_in.append('\033[31m' + board[i][j] + '\033[0m')
+                    tmp_list_in.append('\033[01;31m' + board[i][j] + '\033[0m')
                 else:
                     tmp_list_in.append('\033[34m' + board[i][j] + '\033[0m')
             elif line_filled == 4:
                 if j == 1:
-                    tmp_list_in.append('\033[31m' + board[i][j] + '\033[0m')
+                    tmp_list_in.append('\033[01;31m' + board[i][j] + '\033[0m')
                 else:
                     tmp_list_in.append('\033[34m' + board[i][j] + '\033[0m')
             elif line_filled == 5:
                 if j == 2:
-                    tmp_list_in.append('\033[31m' + board[i][j] + '\033[0m')
+                    tmp_list_in.append('\033[01;31m' + board[i][j] + '\033[0m')
                 else:
                     tmp_list_in.append('\033[34m' + board[i][j] + '\033[0m')
             elif line_filled == 6:
                 if i == j:
-                    tmp_list_in.append('\033[31m' + board[i][j] + '\033[0m')
+                    tmp_list_in.append('\033[01;31m' + board[i][j] + '\033[0m')
                 else:
                     tmp_list_in.append('\033[34m' + board[i][j] + '\033[0m')
             elif line_filled == 7:
                 if (i == 0 and j == 2) or (i == 1 and j == 1) or (i == 2 and j == 0):
-                    tmp_list_in.append('\033[31m' + board[i][j] + '\033[0m')
+                    tmp_list_in.append('\033[01;31m' + board[i][j] + '\033[0m')
                 else:
                     tmp_list_in.append('\033[34m' + board[i][j] + '\033[0m')
             else:
@@ -86,18 +111,18 @@ def print_board(board, line_filled):
     margin_left = " " * 5
     line_horizontal = f"{margin_left + '   '}---+---+---"
     counter = 0
-    one = '\033[36m' + '1' + '\033[0m'
-    two = '\033[36m' + '2' + '\033[0m'
-    three = '\033[36m' + '3' + '\033[0m'
+    one = '\033[01;36m' + '1' + '\033[0m'
+    two = '\033[01;36m' + '2' + '\033[0m'
+    three = '\033[01;36m' + '3' + '\033[0m'
 
     for line in tmp_list_out:
         if counter == 0:
-            letter_coord = '\033[32m' + "A" + '\033[0m'
+            letter_coord = '\033[01;32m' + "A" + '\033[0m'
             print(f"{margin_left + '   '} {one}   {two}   {three}")
         elif counter == 1:
-            letter_coord = '\033[32m' + "B" + '\033[0m'
+            letter_coord = '\033[01;32m' + "B" + '\033[0m'
         else:
-            letter_coord = '\033[32m' + "C" + '\033[0m'
+            letter_coord = '\033[01;32m' + "C" + '\033[0m'
 
         print(f"{margin_left}{letter_coord}   {line[0]} | {line[1]} | {line[2]}")
 
@@ -108,15 +133,15 @@ def print_board(board, line_filled):
 
 # TEST
 if __name__ == '__main__':
-    # test = [['X', 'X', 'X'], ['.', 'O', '.'], ['O', '.', '.']]
+    test = [['X', 'X', 'X'], ['.', 'O', '.'], ['O', '.', '.']]
     # test = [['.', '.', '.'], ['O', 'O', 'O'], ['X', '.', '.']]
     # test = [['.', '.', '.'], ['.', 'O', '.'], ['X', 'X', 'X']]
     # test = [['O', '.', '.'], ['O', 'X', '.'], ['O', '.', '.']]
     # test = [['.', 'X', '.'], ['.', 'X', '.'], ['O', 'X', '.']]
     # test = [['.', '.', 'O'], ['.', 'X', 'O'], ['O', '.', 'O']]
     # test = [['X', '.', '.'], ['.', 'X', '.'], ['O', '.', 'X']]
-    test = [['.', '.', 'O'], ['.', 'O', '.'], ['O', '.', '.']]
+    # test = [['.', '.', 'O'], ['X', 'O', '.'], ['O', '.', 'X']]
 
     print(has_won(test))
 
-    print_board(test, 7)
+    print_board(test, 0)
