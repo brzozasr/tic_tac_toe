@@ -37,7 +37,7 @@ def is_full(board):
 
 def has_won(board):
     """Checking if three of their marks in a horizontal, vertical, or diagonal row and
-    return True, player winning marks (X or O), number of full mark line (from 0 to 7),
+    return True, player winning marks (X or O), the number of full mark line (from 0 to 7),
     otherwise return False, None, -1.
     Full mark lines: 0 - top horizontal, 1 - middle horizontal, 2 - bottom horizontal,
     3 - left vertical, 4 - middle vertical, 5 - right vertical, 6 - left diagonal,
@@ -133,15 +133,15 @@ def print_board(board, line_filled):
 
 # TEST
 if __name__ == '__main__':
-    test = [['X', 'X', 'X'], ['.', 'O', '.'], ['O', '.', '.']]
+    # test = [['X', 'X', 'X'], ['.', 'O', '.'], ['O', '.', '.']]
     # test = [['.', '.', '.'], ['O', 'O', 'O'], ['X', '.', '.']]
     # test = [['.', '.', '.'], ['.', 'O', '.'], ['X', 'X', 'X']]
     # test = [['O', '.', '.'], ['O', 'X', '.'], ['O', '.', '.']]
     # test = [['.', 'X', '.'], ['.', 'X', '.'], ['O', 'X', '.']]
     # test = [['.', '.', 'O'], ['.', 'X', 'O'], ['O', '.', 'O']]
     # test = [['X', '.', '.'], ['.', 'X', '.'], ['O', '.', 'X']]
-    # test = [['.', '.', 'O'], ['X', 'O', '.'], ['O', '.', 'X']]
+    test = [['.', '.', 'O'], ['X', 'O', '.'], ['O', '.', 'X']]
 
     print(has_won(test))
 
-    print_board(test, 0)
+    print_board(test, 7)
