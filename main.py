@@ -192,6 +192,7 @@ def main():
                 else:
                     mess_human = mark(play_board, move, player)
                     set_message(mess_human[1])
+                    # TODO check win and full board
                     if mess_human[0]:
                         ai.get_ai_move(level_hum_ai, play_board, player_ai, player)
 
