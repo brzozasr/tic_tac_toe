@@ -58,6 +58,15 @@ def has_won(board):
     return False, None, -1, None
 
 
+def is_level_correct(level):
+    """Checking that insert level is correct ("EASY", "MEDIUM", "HARD")"""
+    levels = ["EASY", "MEDIUM", "HARD"]
+    if level in levels:
+        return True
+    else:
+        return False
+
+
 def print_board(board, line_filled):
     """Print the formatting board and coloring three in a row:
     - board: board of the game (global variable 'play_board');

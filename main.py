@@ -17,7 +17,7 @@ game_sts = 0
 # "EASY" - easy
 # "MEDIUM" - medium
 # "HARD" - hard
-level_hum_ai = "EASY"
+level_hum_ai = ""
 
 
 def set_play_board(new_play_board):
@@ -123,7 +123,7 @@ def main():
     set_player(random.choice(["X", "O"]))
     while is_game_running:
         if game_sts == 0:
-            print("Available game modes: 1 - Human-Human, 2 - Human-AI, 3 - AI-AI or \"exit\" to terminate..")
+            print("Available game modes: 1 - Human-Human, 2 - Human-AI, 3 - AI-AI or \"exit\" to terminate.")
             mode = input("Select the gem mode: ")
             if mode == "exit":
                 break
@@ -160,28 +160,40 @@ def main():
                 set_player_ai("O")
             else:
                 set_player_ai("X")
-            tools.clear_console()
-            win = tools.has_won(play_board)
-            full = tools.is_full(play_board)
-            if win[0]:
-                set_message(win[3])
-            elif full[0]:
-                set_message(full[1])
-            tools.print_board(play_board, win[2])
-            tools.show_message(message)
-            if win[0] or full[0]:
-                reset_game()
-                continue
-            move = input(f"Now your move \"{player}\": ")
-            move = move.upper()
-            if move == "EXIT":
-                break
-            elif level_hum_ai == "EASY":
-                mess_human = mark(play_board, move, player)
-                set_message(mess_human[1])
-                ai.get_ai_move("EASY", play_board, player_ai, player)
-            else:
-                continue
+
+            if level_hum_ai == "":
+                print("There are available game levels for Human-AI: \"easy\", \"medium\" or \"hard\".")
+                level = input("Select a game level: ")
+                level = level.upper()
+                if level == "EXIT":
+                    break
+                elif tools.is_level_correct(level):
+                    set_level_hum_ai(level)
+                else:
+                    print('\033[31m', "Write the level you want to play: \"easy\", \"medium\" or \"hard\"!", '\033[0m')
+                    continue
+            elif tools.is_level_correct(level_hum_ai):
+                tools.clear_console()
+                win = tools.has_won(play_board)
+                full = tools.is_full(play_board)
+                if win[0]:
+                    set_message(win[3])
+                elif full[0]:
+                    set_message(full[1])
+                tools.print_board(play_board, win[2])
+                tools.show_message(message)
+                if win[0] or full[0]:
+                    reset_game()
+                    continue
+                move = input(f"Now your move \"{player}\": ")
+                move = move.upper()
+                if move == "EXIT":
+                    break
+                else:
+                    mess_human = mark(play_board, move, player)
+                    set_message(mess_human[1])
+                    if mess_human[0]:
+                        ai.get_ai_move(level_hum_ai, play_board, player_ai, player)
 
 
 main()
