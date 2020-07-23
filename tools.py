@@ -30,15 +30,16 @@ def is_full(board):
         for dot in dot_list:
             temp_str += dot
     if "." in temp_str:
-        return False
+        return False, None
     else:
-        return True
+        message = '\033[35m' + "It is a draw, no one has won!!!" + '\033[0m'
+        return True, message
 
 
 def has_won(board):
     """Checking if three of their marks in a horizontal, vertical, or diagonal row and
-    return True, player winning marks (X or O), the number of full mark line (from 0 to 7),
-    otherwise return False, None, -1.
+    return True, player winning marks (X or O), the number of full mark line (from 0 to 7)
+    and a message that mark X or O won, otherwise return False, None, -1, None.
     Full mark lines: 0 - top horizontal, 1 - middle horizontal, 2 - bottom horizontal,
     3 - left vertical, 4 - middle vertical, 5 - right vertical, 6 - left diagonal,
     7 - right diagonal."""
@@ -51,9 +52,10 @@ def has_won(board):
         line_no = 0
         for line in lines:
             if line.count(player) == 3:
-                return True, player, line_no
+                message = '\033[35m' + f"The player \"{player}\" has won!!!" + '\033[0m'
+                return True, player, line_no, message
             line_no += 1
-    return False, None, -1
+    return False, None, -1, None
 
 
 def print_board(board, line_filled):
@@ -131,6 +133,12 @@ def print_board(board, line_filled):
         counter += 1
 
 
+def show_message(message):
+    """Function prints a message under the board."""
+    if message != "" and message is not None:
+        print(message)
+
+
 # TEST
 if __name__ == '__main__':
     # test = [['X', 'X', 'X'], ['.', 'O', '.'], ['O', '.', '.']]
@@ -139,9 +147,9 @@ if __name__ == '__main__':
     # test = [['O', '.', '.'], ['O', 'X', '.'], ['O', '.', '.']]
     # test = [['.', 'X', '.'], ['.', 'X', '.'], ['O', 'X', '.']]
     # test = [['.', '.', 'O'], ['.', 'X', 'O'], ['O', '.', 'O']]
-    # test = [['X', '.', '.'], ['.', 'X', '.'], ['O', '.', 'X']]
-    test = [['.', '.', 'O'], ['X', 'O', '.'], ['O', '.', 'X']]
+    test = [['X', '.', '.'], ['.', 'X', '.'], ['O', '.', 'X']]
+    # test = [['.', '.', 'O'], ['X', 'O', '.'], ['O', '.', 'X']]
 
     print(has_won(test))
 
-    print_board(test, 7)
+    print_board(test, has_won(test)[2])
