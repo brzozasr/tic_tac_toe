@@ -19,6 +19,9 @@ game_sts = 0
 # "HARD" - hard
 level_hum_ai = ""
 
+# TODO usunąć przypadek szczególny
+test_list = [["X", "O", ".", ], ["X", "X", "O"], [".", "O", "O"]]
+
 
 def set_play_board(new_play_board):
     """Setter for the variable 'play_board'."""
@@ -104,10 +107,8 @@ def mark(board, coordinates, player_sign):
             if game_sts == 1:
                 if player_sign == "X":
                     set_player("O")
-                    print(play_board)  # TODO delete
                 else:
                     set_player("X")
-                    print(play_board)  # TODO delete
             return True, None
         else:
             mess = '\033[31m' + f"\"{board[x][y]}\" is inserted in the field \"{coordinates}\"." + '\033[0m'
@@ -121,6 +122,7 @@ def main():
     set_play_board(init_board())
     is_game_running = True
     set_player(random.choice(["X", "O"]))
+    tools.intro()
     while is_game_running:
         if game_sts == 0:
             print("Available game modes: 1 - Human-Human, 2 - Human-AI, 3 - AI-AI or \"exit\" to terminate.")
@@ -160,7 +162,6 @@ def main():
                 set_player_ai("O")
             else:
                 set_player_ai("X")
-
             if level_hum_ai == "":
                 print("There are available game levels for Human-AI: \"easy\", \"medium\" or \"hard\".")
                 level = input("Select a game level: ")
@@ -192,9 +193,44 @@ def main():
                 else:
                     mess_human = mark(play_board, move, player)
                     set_message(mess_human[1])
-                    # TODO check win and full board
-                    if mess_human[0]:
+                    win = tools.has_won(play_board)
+                    full = tools.is_full(play_board)
+                    if mess_human[0] and not win[0] and not full[0]:
                         ai.get_ai_move(level_hum_ai, play_board, player_ai, player)
+        # ============ AI-AI ==============
+        elif game_sts == 3:
+            if player == "X":
+                set_player_ai("O")
+            else:
+                set_player_ai("X")
+            set_level_hum_ai("HARD")
+            win = tools.has_won(play_board)
+            full = tools.is_full(play_board)
+            if win[0]:
+                set_message(win[3])
+            elif full[0]:
+                set_message(full[1])
+            if not win[0] and not full[0]:
+                ai.get_ai_move("MEDIUM", play_board, player, player_ai)
+                tools.clear_console()
+                tools.print_board(play_board, win[2])
+                time.sleep(1.5)
+                win = tools.has_won(play_board)
+                full = tools.is_full(play_board)
+                if win[0]:
+                    set_message(win[3])
+                elif full[0]:
+                    set_message(full[1])
+                if not win[0] and not full[0]:
+                    ai.get_ai_move(level_hum_ai, play_board, player_ai, player)
+                    tools.clear_console()
+                    tools.print_board(play_board, win[2])
+                    tools.show_message(message)
+                    time.sleep(1.5)
+            else:
+                tools.show_message(message)
+                reset_game()
+                continue
 
 
 main()

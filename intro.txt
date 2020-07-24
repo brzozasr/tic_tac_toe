@@ -11,3 +11,4 @@ Sławomir Brzozowski
 
 CODECOOL Ltd.
 Full-Stack Developer Weekend - July 2020
+========================================

@@ -1,5 +1,6 @@
 import os
 import subprocess
+import time
 
 
 def clear_console():
@@ -24,7 +25,7 @@ def is_mode_correct(mode_no):
 
 
 def is_full(board):
-    """Checking that board is full (True) or not (False)"""
+    """Checking that board is full (True) and a message about the draw or not (False), None."""
     temp_str = ""
     for dot_list in board:
         for dot in dot_list:
@@ -58,6 +59,26 @@ def has_won(board):
     return False, None, -1, None
 
 
+def len_board(board):
+    """Function count elements (X and O) on the board and return integer."""
+    counter = 0
+    for line in board:
+        for cell in line:
+            if cell != ".":
+                counter += 1
+    return counter
+
+
+def len_mark(board, mark):
+    """Function count marks of the player or AI on the board and return integer."""
+    counter = 0
+    for line in board:
+        for cell in line:
+            if cell == mark:
+                counter += 1
+    return counter
+
+
 def is_level_correct(level):
     """Checking that insert level is correct ("EASY", "MEDIUM", "HARD")"""
     levels = ["EASY", "MEDIUM", "HARD"]
@@ -79,44 +100,89 @@ def print_board(board, line_filled):
                 if i == 0:
                     tmp_list_in.append('\033[01;31m' + board[i][j] + '\033[0m')
                 else:
-                    tmp_list_in.append('\033[34m' + board[i][j] + '\033[0m')
+                    if board[i][j] == "X":
+                        tmp_list_in.append('\033[33m' + board[i][j] + '\033[0m')
+                    elif board[i][j] == "O":
+                        tmp_list_in.append('\033[34m' + board[i][j] + '\033[0m')
+                    else:
+                        tmp_list_in.append('\033[35m' + board[i][j] + '\033[0m')
             elif line_filled == 1:
                 if i == 1:
                     tmp_list_in.append('\033[01;31m' + board[i][j] + '\033[0m')
                 else:
-                    tmp_list_in.append('\033[34m' + board[i][j] + '\033[0m')
+                    if board[i][j] == "X":
+                        tmp_list_in.append('\033[33m' + board[i][j] + '\033[0m')
+                    elif board[i][j] == "O":
+                        tmp_list_in.append('\033[34m' + board[i][j] + '\033[0m')
+                    else:
+                        tmp_list_in.append('\033[35m' + board[i][j] + '\033[0m')
             elif line_filled == 2:
                 if i == 2:
                     tmp_list_in.append('\033[01;31m' + board[i][j] + '\033[0m')
                 else:
-                    tmp_list_in.append('\033[34m' + board[i][j] + '\033[0m')
+                    if board[i][j] == "X":
+                        tmp_list_in.append('\033[33m' + board[i][j] + '\033[0m')
+                    elif board[i][j] == "O":
+                        tmp_list_in.append('\033[34m' + board[i][j] + '\033[0m')
+                    else:
+                        tmp_list_in.append('\033[35m' + board[i][j] + '\033[0m')
             elif line_filled == 3:
                 if j == 0:
                     tmp_list_in.append('\033[01;31m' + board[i][j] + '\033[0m')
                 else:
-                    tmp_list_in.append('\033[34m' + board[i][j] + '\033[0m')
+                    if board[i][j] == "X":
+                        tmp_list_in.append('\033[33m' + board[i][j] + '\033[0m')
+                    elif board[i][j] == "O":
+                        tmp_list_in.append('\033[34m' + board[i][j] + '\033[0m')
+                    else:
+                        tmp_list_in.append('\033[35m' + board[i][j] + '\033[0m')
             elif line_filled == 4:
                 if j == 1:
                     tmp_list_in.append('\033[01;31m' + board[i][j] + '\033[0m')
                 else:
-                    tmp_list_in.append('\033[34m' + board[i][j] + '\033[0m')
+                    if board[i][j] == "X":
+                        tmp_list_in.append('\033[33m' + board[i][j] + '\033[0m')
+                    elif board[i][j] == "O":
+                        tmp_list_in.append('\033[34m' + board[i][j] + '\033[0m')
+                    else:
+                        tmp_list_in.append('\033[35m' + board[i][j] + '\033[0m')
             elif line_filled == 5:
                 if j == 2:
                     tmp_list_in.append('\033[01;31m' + board[i][j] + '\033[0m')
                 else:
-                    tmp_list_in.append('\033[34m' + board[i][j] + '\033[0m')
+                    if board[i][j] == "X":
+                        tmp_list_in.append('\033[33m' + board[i][j] + '\033[0m')
+                    elif board[i][j] == "O":
+                        tmp_list_in.append('\033[34m' + board[i][j] + '\033[0m')
+                    else:
+                        tmp_list_in.append('\033[35m' + board[i][j] + '\033[0m')
             elif line_filled == 6:
                 if i == j:
                     tmp_list_in.append('\033[01;31m' + board[i][j] + '\033[0m')
                 else:
-                    tmp_list_in.append('\033[34m' + board[i][j] + '\033[0m')
+                    if board[i][j] == "X":
+                        tmp_list_in.append('\033[33m' + board[i][j] + '\033[0m')
+                    elif board[i][j] == "O":
+                        tmp_list_in.append('\033[34m' + board[i][j] + '\033[0m')
+                    else:
+                        tmp_list_in.append('\033[35m' + board[i][j] + '\033[0m')
             elif line_filled == 7:
                 if (i == 0 and j == 2) or (i == 1 and j == 1) or (i == 2 and j == 0):
                     tmp_list_in.append('\033[01;31m' + board[i][j] + '\033[0m')
                 else:
-                    tmp_list_in.append('\033[34m' + board[i][j] + '\033[0m')
+                    if board[i][j] == "X":
+                        tmp_list_in.append('\033[33m' + board[i][j] + '\033[0m')
+                    elif board[i][j] == "O":
+                        tmp_list_in.append('\033[34m' + board[i][j] + '\033[0m')
+                    else:
+                        tmp_list_in.append('\033[35m' + board[i][j] + '\033[0m')
             else:
-                tmp_list_in.append('\033[34m' + board[i][j] + '\033[0m')
+                if board[i][j] == "X":
+                    tmp_list_in.append('\033[33m' + board[i][j] + '\033[0m')
+                elif board[i][j] == "O":
+                    tmp_list_in.append('\033[34m' + board[i][j] + '\033[0m')
+                else:
+                    tmp_list_in.append('\033[35m' + board[i][j] + '\033[0m')
         tmp_list_out.append(tmp_list_in)
 
     margin_left = " " * 5
@@ -146,6 +212,34 @@ def show_message(message):
     """Function prints a message under the board."""
     if message != "" and message is not None:
         print(message)
+
+
+def intro():
+    current_dir = os.path.dirname(os.path.realpath(__file__))
+    file = "intro.txt"
+    data_line = os.path.join(current_dir, file)
+
+    if os.path.exists(data_line):
+        with open(data_line, "r") as ascii_line:
+            color = [1, 2, 3, 4, 5, 6]
+            i = 0
+            counter = 0
+            margin_left = " " * 10
+            for line in ascii_line:
+                line = line.strip(os.linesep)
+                if counter > 5:
+                    print(f'{margin_left}\033[01;3{color[i]};40m{line:^50}\033[0m')
+                else:
+                    print(f'{margin_left}\033[01;3{color[i]};40m{line:^50}\033[0m')
+                    i -= 1
+                counter += 1
+                if i <= 4:
+                    i += 1
+                else:
+                    i = 0
+                time.sleep(0.2)
+    else:
+        print('\033[31m', f"The file \"{data_line}\" doesn't exist!", '\033[0m')
 
 
 # TEST
