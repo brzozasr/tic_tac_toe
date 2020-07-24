@@ -53,7 +53,7 @@ def has_won(board):
         line_no = 0
         for line in lines:
             if line.count(player) == 3:
-                message = '\033[35m' + f"The player \"{player}\" has won!!!" + '\033[0m'
+                message = '\033[36m' + f"The player \"{player}\" has won!!!" + '\033[0m'
                 return True, player, line_no, message
             line_no += 1
     return False, None, -1, None
@@ -233,6 +233,28 @@ def intro():
                     print(f'{margin_left}\033[01;3{color[i]};40m{line:^50}\033[0m')
                     i -= 1
                 counter += 1
+                if i <= 4:
+                    i += 1
+                else:
+                    i = 0
+                time.sleep(0.2)
+    else:
+        print('\033[31m', f"The file \"{data_line}\" doesn't exist!", '\033[0m')
+
+
+def outro():
+    current_dir = os.path.dirname(os.path.realpath(__file__))
+    file = "outro.txt"
+    data_line = os.path.join(current_dir, file)
+
+    if os.path.exists(data_line):
+        with open(data_line, "r") as ascii_line:
+            color = [1, 2, 3, 4, 5, 6]
+            i = 0
+            margin_left = " " * 3
+            for line in ascii_line:
+                line = line.strip(os.linesep)
+                print(f'{margin_left}\033[01;3{color[i]};40m{line:^65}\033[0m')
                 if i <= 4:
                     i += 1
                 else:

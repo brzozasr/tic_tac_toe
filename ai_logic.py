@@ -192,8 +192,9 @@ def put_ai_mark_row_col(board, ai_mark, player_mark):
     return False
 
 
-def check_two_lines(board, ai_mark, player_mark):
-    """Check tow crossing lines"""
+def put_two_cross_lines(board, ai_mark, player_mark):
+    """Check tow crossing outside lines, in these lines have to be placed AI mark
+    in the middle of the line."""
     if board[0][0] == "." and board[0][1] == player_mark and board[0][2] == "." and \
             board[1][2] == player_mark and board[2][2] == ".":
         board[0][2] = ai_mark
@@ -215,6 +216,7 @@ def check_two_lines(board, ai_mark, player_mark):
 
 
 def put_ai_mark_in_corner(board, ai_mark):
+    """Function puts AI mark in a random corner."""
     corners = [(0, 0), (0, 2), (2, 0), (2, 2)]
     for corner in corners:
         if board[corner[0]][corner[1]] == ".":
@@ -242,9 +244,10 @@ def ai_unbeatable(board, ai_mark, player_mark):
     if tools.len_board(board) <= 5:
         if tools.len_board(board) == 1:
             if board[1][1] == player_mark:
-                coord = random.choice([(0, 0), (0, 2), (2, 0), (2, 2)])
-                board[coord[0]][coord[1]] = ai_mark
-                return True
+                # coord = random.choice([(0, 0), (0, 2), (2, 0), (2, 2)])
+                # board[coord[0]][coord[1]] = ai_mark
+                # return True
+                return put_ai_mark_in_corner(board, ai_mark)
             elif board[0][0] == player_mark or board[0][2] == player_mark or \
                     board[2][0] == player_mark or board[2][2] == player_mark or \
                     board[1][0] == player_mark or board[0][1] == player_mark or \
@@ -260,10 +263,13 @@ def ai_unbeatable(board, ai_mark, player_mark):
                         board[2][0] == player_mark or board[2][2] == player_mark:
                     if not put_ai_mark_row_col(board, ai_mark, player_mark):
                         return ai_random_mark(board, ai_mark)
+                else:
+                    if not put_two_cross_lines(board, ai_mark, player_mark):
+                        return ai_random_mark(board, ai_mark)
         elif tools.len_board(board) == 5:
             if not fill_gap_to_win(board, ai_mark):
                 if not fill_gap_to_prevent(board, ai_mark, player_mark):
-                    if not check_two_lines(board, ai_mark, player_mark):
+                    if not put_two_cross_lines(board, ai_mark, player_mark):
                         return ai_random_mark(board, ai_mark)
     else:
         if not fill_gap_to_win(board, ai_mark):

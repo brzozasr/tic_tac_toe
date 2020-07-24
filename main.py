@@ -19,9 +19,6 @@ game_sts = 0
 # "HARD" - hard
 level_hum_ai = ""
 
-# TODO usunąć przypadek szczególny
-test_list = [["X", "O", ".", ], ["X", "X", "O"], [".", "O", "O"]]
-
 
 def set_play_board(new_play_board):
     """Setter for the variable 'play_board'."""
@@ -128,6 +125,7 @@ def main():
             print("Available game modes: 1 - Human-Human, 2 - Human-AI, 3 - AI-AI or \"exit\" to terminate.")
             mode = input("Select the gem mode: ")
             if mode == "exit":
+                tools.outro()
                 break
             elif tools.is_mode_correct(mode):
                 set_game_sts(int(mode))
@@ -151,6 +149,7 @@ def main():
             move = input(f"Now moves \"{player}\": ")
             move = move.upper()
             if move == "EXIT":
+                tools.outro()
                 break
             elif mess := mark(play_board, move, player):
                 set_message(mess[1])
@@ -167,6 +166,7 @@ def main():
                 level = input("Select a game level: ")
                 level = level.upper()
                 if level == "EXIT":
+                    tools.outro()
                     break
                 elif tools.is_level_correct(level):
                     set_level_hum_ai(level)
@@ -189,6 +189,7 @@ def main():
                 move = input(f"Now your move \"{player}\": ")
                 move = move.upper()
                 if move == "EXIT":
+                    tools.outro()
                     break
                 else:
                     mess_human = mark(play_board, move, player)
@@ -214,7 +215,7 @@ def main():
                 ai.get_ai_move("MEDIUM", play_board, player, player_ai)
                 tools.clear_console()
                 tools.print_board(play_board, win[2])
-                time.sleep(1.5)
+                time.sleep(1)
                 win = tools.has_won(play_board)
                 full = tools.is_full(play_board)
                 if win[0]:
@@ -226,8 +227,10 @@ def main():
                     tools.clear_console()
                     tools.print_board(play_board, win[2])
                     tools.show_message(message)
-                    time.sleep(1.5)
+                    time.sleep(1)
             else:
+                tools.clear_console()
+                tools.print_board(play_board, win[2])
                 tools.show_message(message)
                 reset_game()
                 continue
