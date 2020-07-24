@@ -89,7 +89,7 @@ def is_level_correct(level):
 
 
 def print_board(board, line_filled):
-    """Print the formatting board and coloring three in a row:
+    """Print the game board formatting and coloring the three won marks in the row:
     - board: board of the game (global variable 'play_board');
     - line_filled: number of three in a row (from function 'has_won()')."""
     tmp_list_out = []
@@ -215,6 +215,7 @@ def show_message(message):
 
 
 def intro():
+    """Print intro ASCI art from the text file."""
     current_dir = os.path.dirname(os.path.realpath(__file__))
     file = "intro.txt"
     data_line = os.path.join(current_dir, file)
@@ -243,6 +244,7 @@ def intro():
 
 
 def outro():
+    """Print outro ASCI art from the text file."""
     current_dir = os.path.dirname(os.path.realpath(__file__))
     file = "outro.txt"
     data_line = os.path.join(current_dir, file)

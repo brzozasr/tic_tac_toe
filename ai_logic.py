@@ -134,7 +134,7 @@ def fill_gap_to_prevent(board, ai_mark, player_mark):
 
 
 def put_ai_mark_row_col(board, ai_mark, player_mark):
-    """Put AI mark in a row or column if there in only one AI mark and two dots.
+    """Put AI mark in a row or column if there is only one AI mark and two dots.
     WARNING: works only if len_board() == 3"""
     # copy of board
     board_copy = board.copy()
@@ -292,6 +292,7 @@ def ai_move_medium(board, ai_mark, player_mark):
 
 
 def get_ai_move(level, board, ai_mark, player_mark):
+    """The function selects the difficulty of the Human-AI game."""
     if level == "EASY":
         ai_move_easy(board, ai_mark, player_mark)
     elif level == "MEDIUM":
