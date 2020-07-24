@@ -218,6 +218,7 @@ def put_two_cross_lines(board, ai_mark, player_mark):
 def put_ai_mark_in_corner(board, ai_mark):
     """Function puts AI mark in a random corner."""
     corners = [(0, 0), (0, 2), (2, 0), (2, 2)]
+    random.shuffle(corners)
     for corner in corners:
         if board[corner[0]][corner[1]] == ".":
             board[corner[0]][corner[1]] = ai_mark
@@ -244,9 +245,6 @@ def ai_unbeatable(board, ai_mark, player_mark):
     if tools.len_board(board) <= 5:
         if tools.len_board(board) == 1:
             if board[1][1] == player_mark:
-                # coord = random.choice([(0, 0), (0, 2), (2, 0), (2, 2)])
-                # board[coord[0]][coord[1]] = ai_mark
-                # return True
                 return put_ai_mark_in_corner(board, ai_mark)
             elif board[0][0] == player_mark or board[0][2] == player_mark or \
                     board[2][0] == player_mark or board[2][2] == player_mark or \
