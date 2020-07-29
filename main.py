@@ -123,7 +123,7 @@ def main():
     while is_game_running:
         if game_sts == 0:
             print("Available game modes: 1 - Human-Human, 2 - Human-AI, 3 - AI-AI or \"exit\" to terminate.")
-            mode = input("Select the gem mode: ")
+            mode = input("Select the game mode: ")
             if mode == "exit":
                 tools.outro()
                 break
